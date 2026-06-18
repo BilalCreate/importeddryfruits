@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ImportedDryFruits — Premium Imported Dry Fruits</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f0c07; color: #f5e6c8; }
+
+    /* TOP BAR */
+    .topbar { background: #d4a843; color: #0f0c07; text-align: center; padding: 8px; font-size: 12px; font-weight: 600; letter-spacing: 1px; }
+
+    /* NAV */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2.5rem; border-bottom: 0.5px solid #4a3a1e; position: sticky; top: 0; background: #0f0c07; z-index: 100; }
+    .logo { font-size: 18px; font-weight: 700; color: #d4a843; letter-spacing: 2px; }
+    .logo span { color: #f0d898; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { color: #c9b48a; font-size: 13px; text-decoration: none; letter-spacing: 0.5px; }
+    .nav-links a:hover { color: #d4a843; }
+    .nav-order-btn { background: #d4a843; color: #0f0c07 !important; padding: 8px 20px; border-radius: 4px; font-weight: 600; font-size: 13px; }
+    .nav-order-btn:hover { background: #e8bc55 !important; color: #0f0c07 !important; }
+
+    /* HERO */
+    .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 480px; }
+    .hero-left { background: #1a1306; padding: 5rem 3rem; display: flex; flex-direction: column; justify-content: center; }
+    .hero-badge { display: inline-block; background: #2a1f08; border: 0.5px solid #8a6520; color: #d4a843; font-size: 11px; letter-spacing: 2px; padding: 6px 16px; border-radius: 20px; margin-bottom: 1.5rem; text-transform: uppercase; width: fit-content; }
+    .hero h1 { font-size: 42px; font-weight: 700; color: #f0d898; line-height: 1.2; margin-bottom: 1rem; }
+    .hero h1 span { color: #d4a843; }
+    .hero-desc { font-size: 14px; color: #a08c6a; line-height: 1.7; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-gold { background: #d4a843; color: #0f0c07; border: none; padding: 13px 28px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-gold:hover { background: #e8bc55; }
+    .btn-outline { background: transparent; color: #d4a843; border: 1px solid #d4a843; padding: 13px 28px; border-radius: 4px; font-size: 14px; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-outline:hover { background: #1f1608; }
+    .hero-right { background: #120e06; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .hero-img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 340px; }
+    .hero-img-box { background: #1e1608; border: 0.5px solid #3a2d15; border-radius: 8px; padding: 1.5rem 1rem; text-align: center; }
+    .hero-img-box .icon { font-size: 36px; margin-bottom: 8px; }
+    .hero-img-box .label { font-size: 12px; color: #c9b48a; font-weight: 500; }
+    .hero-img-box .sublabel { font-size: 10px; color: #6a5a42; margin-top: 3px; }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); background: #1a1306; border-top: 0.5px solid #3a2d15; border-bottom: 0.5px solid #3a2d15; }
+    .stat { padding: 1.5rem; text-align: center; border-right: 0.5px solid #3a2d15; }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-size: 26px; font-weight: 700; color: #d4a843; }
+    .stat-label { font-size: 11px; color: #7a6a52; margin-top: 4px; letter-spacing: 0.5px; }
+
+    /* SECTIONS */
+    .section { padding: 4rem 2.5rem; }
+    .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .section-label { font-size: 11px; letter-spacing: 3px; color: #8a6520; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .section-title { font-size: 28px; font-weight: 700; color: #f0d898; }
+    .section-sub { font-size: 13px; color: #7a6a52; margin-top: 0.3rem; }
+    .divider { height: 0.5px; background: #2e2210; margin: 0 2.5rem; }
+
+    /* TABS */
+    .category-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+    .tab { background: #16110a; border: 0.5px solid #3a2d15; color: #a08c6a; font-size: 12px; padding: 7px 18px; border-radius: 20px; cursor: pointer; letter-spacing: 0.5px; }
+    .tab.active, .tab:hover { background: #2a1f08; border-color: #8a6520; color: #d4a843; }
+
+    /* PRODUCTS */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+    .product-card { background: #16110a; border: 0.5px solid #3a2d15; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; }
+    .product-card:hover { border-color: #8a6520; transform: translateY(-2px); }
+    .product-img { background: #1e1608; padding: 1.5rem; text-align: center; font-size: 44px; border-bottom: 0.5px solid #2a1f08; }
+    .product-body { padding: 0.9rem; flex: 1; display: flex; flex-direction: column; }
+    .product-cat { font-size: 10px; color: #6a5a42; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+    .product-name { font-size: 13px; font-weight: 500; color: #e0c98a; margin-bottom: 8px; line-height: 1.4; flex: 1; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .product-price { font-size: 16px; font-weight: 700; color: #d4a843; }
+    .product-per { font-size: 10px; color: #5a4a32; }
+    .product-btn { background: #2a1f08; border: 0.5px solid #8a6520; color: #d4a843; font-size: 11px; padding: 5px 10px; border-radius: 4px; cursor: pointer; text-decoration: none; }
+    .product-btn:hover { background: #d4a843; color: #0f0c07; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .about-img { background: #16110a; border: 0.5px solid #3a2d15; border-radius: 12px; padding: 3rem; text-align: center; }
+    .about-img .big-icon { font-size: 80px; margin-bottom: 1rem; }
+    .about-img p { font-size: 13px; color: #7a6a52; line-height: 1.7; }
+    .about-text h2 { font-size: 30px; font-weight: 700; color: #f0d898; margin-bottom: 1rem; }
+    .about-text h2 span { color: #d4a843; }
+    .about-text p { font-size: 14px; color: #a08c6a; line-height: 1.8; margin-bottom: 1rem; }
+    .about-points { list-style: none; margin-top: 1.5rem; }
+    .about-points li { font-size: 13px; color: #c9b48a; padding: 6px 0; border-bottom: 0.5px solid #2a1f08; display: flex; align-items: center; gap: 10px; }
+    .about-points li::before { content: "✦"; color: #d4a843; font-size: 10px; flex-shrink: 0; }
+
+    /* FEATURES */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .feature-card { background: #16110a; border: 0.5px solid #3a2d15; border-radius: 10px; padding: 1.5rem; }
+    .feature-icon { font-size: 28px; margin-bottom: 0.8rem; }
+    .feature-title { font-size: 14px; font-weight: 600; color: #e0c98a; margin-bottom: 6px; }
+    .feature-text { font-size: 13px; color: #7a6a52; line-height: 1.6; }
+
+    /* SHIPPING */
+    .policy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .policy-box { background: #16110a; border: 0.5px solid #3a2d15; border-radius: 10px; padding: 1.5rem; }
+    .policy-box h3 { font-size: 15px; font-weight: 600; color: #d4a843; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+    .policy-box ul { list-style: none; }
+    .policy-box ul li { font-size: 13px; color: #a08c6a; padding: 5px 0; border-bottom: 0.5px solid #1e1608; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+    .policy-box ul li::before { content: "→"; color: #8a6520; flex-shrink: 0; margin-top: 1px; }
+
+    /* FORM */
+    .form-wrap { background: #16110a; border: 0.5px solid #3a2d15; border-radius: 12px; padding: 2.5rem; max-width: 640px; margin: 0 auto; }
+    .form-title { font-size: 22px; font-weight: 700; color: #f0d898; margin-bottom: 0.3rem; }
+    .form-sub { font-size: 13px; color: #7a6a52; margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 11px; color: #8a7a5a; letter-spacing: 0.5px; margin-bottom: 5px; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: #0f0c07; border: 0.5px solid #3a2d15; color: #e0c98a; padding: 10px 14px; border-radius: 4px; font-size: 14px; font-family: 'Segoe UI', Arial, sans-serif; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #8a6520; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: #4a3a22; }
+    .form-group select option { background: #1a1306; color: #e0c98a; }
+    .form-group textarea { height: 85px; resize: vertical; }
+    .submit-btn { width: 100%; background: #d4a843; color: #0f0c07; border: none; padding: 14px; border-radius: 4px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; }
+    .submit-btn:hover { background: #e8bc55; }
+    .success-msg { display: none; text-align: center; color: #7ec87e; font-size: 14px; margin-top: 1rem; padding: 12px; background: #0d1f0d; border: 0.5px solid #2e5a2e; border-radius: 4px; }
+
+    /* FOOTER */
+    .footer-top { background: #16110a; border-top: 0.5px solid #3a2d15; padding: 3rem 2.5rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
+    .footer-brand .logo { font-size: 20px; margin-bottom: 1rem; display: block; }
+    .footer-brand p { font-size: 13px; color: #7a6a52; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { font-size: 12px; letter-spacing: 2px; color: #8a6520; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col a { display: block; font-size: 13px; color: #7a6a52; text-decoration: none; margin-bottom: 8px; }
+    .footer-col a:hover { color: #d4a843; }
+    .footer-bottom { text-align: center; padding: 1.2rem; border-top: 0.5px solid #2e2210; color: #4a3a22; font-size: 11px; letter-spacing: 1px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 3rem 1.5rem; }
+      .hero h1 { font-size: 30px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-img { display: none; }
+      .policy-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1rem; }
+      .section { padding: 2.5rem 1.2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-wrap { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">🚚 Free delivery on orders above ₹2000 &nbsp;|&nbsp; Pan-India Shipping &nbsp;|&nbsp; 100% Natural & Imported</div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">✦ <span>IMPORTED</span>DRYFRUITS</div>
+    <div class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#shipping">Shipping</a>
+      <a href="#order" class="nav-order-btn">Order Now</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">Directly Imported · 100% Natural</div>
+      <h1>Premium <span>Imported</span><br>Dry Fruits</h1>
+      <p class="hero-desc">Sourced directly from Afghanistan, Iran & California. The finest quality cashews, almonds, anjeer, raisins and pistachios — delivered to your doorstep.</p>
+      <div class="hero-btns">
+        <a class="btn-gold" href="#order">Order Now</a>
+        <a class="btn-outline" href="#products">View Products</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-grid">
+        <div class="hero-img-box"><div class="icon">🥜</div><div class="label">Cashews</div><div class="sublabel">From India</div></div>
+        <div class="hero-img-box"><div class="icon">🌰</div><div class="label">Almonds</div><div class="sublabel">Afghani & Irani</div></div>
+        <div class="hero-img-box"><div class="icon">🍂</div><div class="label">Anjeer</div><div class="sublabel">Afghani</div></div>
+        <div class="hero-img-box"><div class="icon">🍇</div><div class="label">Raisins</div><div class="sublabel">Afghani</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num">14+</div><div class="stat-label">Premium Products</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Product Categories</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Source Countries</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Natural & Pure</div></div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="section" id="products">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Our Collection</div>
+        <div class="section-title">Premium Selection</div>
+        <div class="section-sub">All prices per 1kg · No preservatives · Directly imported</div>
+      </div>
+    </div>
+    <div class="category-tabs">
+      <div class="tab active" onclick="filterProducts('all', this)">All Products</div>
+      <div class="tab" onclick="filterProducts('cashew', this)">Cashews</div>
+      <div class="tab" onclick="filterProducts('almond', this)">Almonds</div>
+      <div class="tab" onclick="filterProducts('anjeer', this)">Anjeer</div>
+      <div class="tab" onclick="filterProducts('raisin', this)">Raisins</div>
+      <div class="tab" onclick="filterProducts('pista', this)">Pistachios</div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <div class="section" id="about">
+    <div class="about-grid">
+      <div class="about-img">
+        <div class="big-icon">🌍</div>
+        <p>Sourcing the finest dry fruits directly from the farms of Afghanistan, Iran, and California — bringing world-class quality straight to your table.</p>
+      </div>
+      <div class="about-text">
+        <h2>About <span>ImportedDryFruits</span></h2>
+        <p>We are passionate about bringing you the highest quality imported dry fruits from the world's best origins. Every product is carefully selected, inspected for quality, and delivered fresh to your doorstep.</p>
+        <p>No middlemen. No compromises. Just pure, authentic dry fruits sourced directly from trusted farms across Afghanistan, Iran, and California.</p>
+        <ul class="about-points">
+          <li>Directly sourced from origin farms</li>
+          <li>Multiple premium grades available</li>
+          <li>No artificial preservatives or colors</li>
+          <li>Pan-India delivery with vacuum sealed packaging</li>
+          <li>Bulk orders available at wholesale prices</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHY US -->
+  <div class="section">
+    <div class="section-label">Why Choose Us</div>
+    <div class="section-title">The ImportedDryFruits Promise</div>
+    <br>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">🌿</div><div class="feature-title">100% Natural</div><div class="feature-text">No artificial colors, flavors, or preservatives. Pure and authentic dry fruits as nature intended.</div></div>
+      <div class="feature-card"><div class="feature-icon">✈️</div><div class="feature-title">Directly Imported</div><div class="feature-text">Sourced straight from Afghanistan, Iran & California farms — no middlemen, lower prices.</div></div>
+      <div class="feature-card"><div class="feature-icon">🏅</div><div class="feature-title">Premium Grades</div><div class="feature-text">Multiple grades available — from standard to premium — so you get exactly what you need.</div></div>
+      <div class="feature-card"><div class="feature-icon">📦</div><div class="feature-title">Safe Packaging</div><div class="feature-text">Vacuum-sealed packaging ensures maximum freshness from our warehouse to your doorstep.</div></div>
+      <div class="feature-card"><div class="feature-icon">🚚</div><div class="feature-title">Pan-India Delivery</div><div class="feature-text">We deliver across all of India within 2–4 business days. Free shipping on orders above ₹2000.</div></div>
+      <div class="feature-card"><div class="feature-icon">💰</div><div class="feature-title">Bulk Orders</div><div class="feature-text">Special pricing available for bulk and wholesale orders. Contact us for custom requirements.</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SHIPPING POLICY -->
+  <div class="section" id="shipping">
+    <div class="section-label">Policies</div>
+    <div class="section-title">Shipping & Returns</div>
+    <br>
+    <div class="policy-grid">
+      <div class="policy-box">
+        <h3>🚚 Shipping Policy</h3>
+        <ul>
+          <li>Orders dispatched within 24 hours of confirmation</li>
+          <li>Delivery within 2–4 business days across India</li>
+          <li>Free shipping on orders above ₹2000</li>
+          <li>Vacuum-sealed packaging for freshness</li>
+          <li>Tracking details shared after dispatch</li>
+          <li>We currently deliver within India only</li>
+        </ul>
+      </div>
+      <div class="policy-box">
+        <h3>↩️ Return & Refund Policy</h3>
+        <ul>
+          <li>Returns accepted within 48 hours of delivery</li>
+          <li>Product must be unopened and in original condition</li>
+          <li>Damaged or wrong items replaced at no extra cost</li>
+          <li>Refund processed within 5–7 business days</li>
+          <li>Contact us with photo proof for claims</li>
+          <li>No returns on opened or used products</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ORDER FORM -->
+  <div class="section" id="order">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div class="section-label">Place an Order</div>
+      <div class="section-title">Order Online</div>
+      <div class="section-sub" style="margin-top:0.4rem;">Fill in your details and we'll confirm within 24 hours</div>
+    </div>
+    <div class="form-wrap">
+      <div class="form-title">Request Your Order</div>
+      <div class="form-sub">All fields marked <span style="color:#d4a843;">*</span> are required.</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name <span style="color:#d4a843;">*</span></label>
+          <input type="text" id="fname" placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label>Phone <span style="color:#d4a843;">*</span></label>
+          <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Product <span style="color:#d4a843;">*</span></label>
+          <select id="product">
+            <option value="">— Select product —</option>
+            <optgroup label="Cashews">
+              <option>Cashew 320 Carnel — ₹800/kg</option>
+              <option>Cashew 210 Carnel — ₹850/kg</option>
+              <option>Cashew 180 Carnel — ₹960/kg</option>
+            </optgroup>
+            <optgroup label="Almonds">
+              <option>Almond Gurbandi Afghani — ₹1,100/kg</option>
+              <option>Almond Mamra Irani — ₹2,000/kg</option>
+              <option>Almond Afghani — ₹1,000/kg</option>
+              <option>Almond California — ₹900/kg</option>
+            </optgroup>
+            <optgroup label="Anjeer">
+              <option>Anjeer Afghani Big Size — ₹1,100/kg</option>
+              <option>Anjeer Afghani Medium Size — ₹1,000/kg</option>
+              <option>Anjeer Afghani Normal Size — ₹900/kg</option>
+            </optgroup>
+            <optgroup label="Raisins">
+              <option>Black Afghani Raisin — ₹500/kg</option>
+              <option>Green Afghani Raisin — ₹600/kg</option>
+            </optgroup>
+            <optgroup label="Pistachios">
+              <option>Pista Irani — ₹1,000/kg</option>
+              <option>Pista without Cover — ₹2,000/kg</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Quantity</label>
+          <select id="qty">
+            <option>250g</option>
+            <option>500g</option>
+            <option>1kg</option>
+            <option>2kg</option>
+            <option>5kg</option>
+            <option>10kg+</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Delivery Address <span style="color:#d4a843;">*</span></label>
+        <textarea id="address" placeholder="House no., street, area, city..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>PIN Code <span style="color:#d4a843;">*</span></label>
+        <input type="text" id="pincode" placeholder="6-digit PIN code" maxlength="6" style="width:160px;" />
+      </div>
+
+      <button class="submit-btn" onclick="submitOrder()">Place Order →</button>
+      <div class="success-msg" id="success-msg">✓ Order received! We'll contact you within 24 hours to confirm.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo">✦ <span style="color:#f0d898;">IMPORTED</span>DRYFRUITS</span>
+      <p>Premium imported dry fruits sourced directly from Afghanistan, Iran & California. 100% natural, no preservatives, delivered fresh across India.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="#products" onclick="filterProducts('cashew', document.querySelector('.tab:nth-child(2)'))">Cashews</a>
+      <a href="#products" onclick="filterProducts('almond', document.querySelector('.tab:nth-child(3)'))">Almonds</a>
+      <a href="#products" onclick="filterProducts('anjeer', document.querySelector('.tab:nth-child(4)'))">Anjeer</a>
+      <a href="#products" onclick="filterProducts('raisin', document.querySelector('.tab:nth-child(5)'))">Raisins</a>
+      <a href="#products" onclick="filterProducts('pista', document.querySelector('.tab:nth-child(6)'))">Pistachios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Information</h4>
+      <a href="#about">About Us</a>
+      <a href="#shipping">Shipping Policy</a>
+      <a href="#shipping">Return Policy</a>
+      <a href="#order">Place an Order</a>
+    </div>
+  </div>
+  <div class="footer-bottom">✦ IMPORTEDDRYFRUITS &nbsp;|&nbsp; PREMIUM IMPORTED DRY FRUITS &nbsp;|&nbsp; ALL PRICES PER 1KG &nbsp;|&nbsp; © 2025</div>
+
+  <script>
+    const products = [
+      { cat: 'cashew', icon: '🥜', name: 'Cashew 320 Carnel', price: 800 },
+      { cat: 'cashew', icon: '🥜', name: 'Cashew 210 Carnel', price: 850 },
+      { cat: 'cashew', icon: '🥜', name: 'Cashew 180 Carnel', price: 960 },
+      { cat: 'almond', icon: '🌰', name: 'Almond Gurbandi Afghani', price: 1100 },
+      { cat: 'almond', icon: '🌰', name: 'Almond Mamra Irani', price: 2000 },
+      { cat: 'almond', icon: '🌰', name: 'Almond Afghani', price: 1000 },
+      { cat: 'almond', icon: '🌰', name: 'Almond California', price: 900 },
+      { cat: 'anjeer', icon: '🍂', name: 'Anjeer Afghani Big Size', price: 1100 },
+      { cat: 'anjeer', icon: '🍂', name: 'Anjeer Afghani Medium Size', price: 1000 },
+      { cat: 'anjeer', icon: '🍂', name: 'Anjeer Afghani Normal Size', price: 900 },
+      { cat: 'raisin', icon: '🍇', name: 'Black Afghani Raisin', price: 500 },
+      { cat: 'raisin', icon: '🍇', name: 'Green Afghani Raisin', price: 600 },
+      { cat: 'pista',  icon: '🫘', name: 'Pista Irani', price: 1000 },
+      { cat: 'pista',  icon: '🫘', name: 'Pista without Cover', price: 2000 },
+    ];
+    const catLabels = { cashew: 'Cashew', almond: 'Almond', anjeer: 'Anjeer', raisin: 'Raisin', pista: 'Pistachio' };
+
+    function renderProducts(filter) {
+      const grid = document.getElementById('products-grid');
+      const filtered = filter === 'all' ? products : products.filter(p => p.cat === filter);
+      grid.innerHTML = filtered.map(p => `
+        <div class="product-card">
+          <div class="product-img">${p.icon}</div>
+          <div class="product-body">
+            <div class="product-cat">${catLabels[p.cat]}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-footer">
+              <div>
+                <div class="product-price">₹${p.price.toLocaleString('en-IN')}</div>
+                <div class="product-per">per 1kg</div>
+              </div>
+              <a class="product-btn" href="#order">Order</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterProducts(cat, el) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderProducts(cat);
+    }
+
+    renderProducts('all');
+
+    function submitOrder() {
+      const name = document.getElementById('fname').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const product = document.getElementById('product').value.trim();
+      const qty = document.getElementById('qty').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const pincode = document.getElementById('pincode').value.trim();
+      if (!name) { alert('Please enter your full name.'); return; }
+      if (!phone) { alert('Please enter your phone number.'); return; }
+      if (!/^[6-9]\d{9}$/.test(phone.replace(/\s+/g, ''))) { alert('Please enter a valid 10-digit Indian mobile number.'); return; }
+      if (!product) { alert('Please select a product.'); return; }
+      if (!address) { alert('Please enter your delivery address.'); return; }
+      if (!pincode || pincode.length !== 6 || isNaN(pincode)) { alert('Please enter a valid 6-digit PIN code.'); return; }
+
+      const message = `🛒 *New Order - ImportedDryFruits*%0A%0A` +
+        `👤 *Name:* ${name}%0A` +
+        `📞 *Phone:* ${phone}%0A` +
+        `📦 *Product:* ${product}%0A` +
+        `⚖️ *Quantity:* ${qty}%0A` +
+        `🏠 *Address:* ${address}%0A` +
+        `📮 *PIN Code:* ${pincode}`;
+
+      const waURL = `https://wa.me/917678418829?text=${message}`;
+      window.open(waURL, '_blank');
+
+      document.getElementById('success-msg').style.display = 'block';
+      const btn = document.querySelector('.submit-btn');
+      btn.disabled = true;
+      btn.style.opacity = '0.5';
+    }
+  </script>
+</body>
+</html>
