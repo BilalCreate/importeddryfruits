@@ -484,18 +484,7 @@
         document.getElementById('success-msg').style.display = 'block';
         btn.style.display = 'none';
 
-        // Also send WhatsApp notification to seller
-        const message = encodeURIComponent(
-          '🛒 *New Order - ImportedDryFruits*\n\n' +
-          '🔢 *Order No:* ' + orderNo + '\n' +
-          '👤 *Name:* ' + name + '\n' +
-          '📞 *Phone:* ' + phone + '\n' +
-          '📦 *Product:* ' + product + '\n' +
-          '⚖️ *Quantity:* ' + qty + '\n' +
-          '🏠 *Address:* ' + address + '\n' +
-          '📮 *PIN Code:* ' + pincode
-        );
-        window.open('https://wa.me/917678418829?text=' + message, '_blank');
+
 
       }).catch(() => {
         alert('Something went wrong. Please try again.');
