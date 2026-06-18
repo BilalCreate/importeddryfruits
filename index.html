@@ -362,8 +362,17 @@
         <input type="text" id="pincode" placeholder="6-digit PIN code" maxlength="6" style="width:160px;" />
       </div>
 
-      <button class="submit-btn" onclick="submitOrder()">Place Order →</button>
-      <div class="success-msg" id="success-msg">✓ Order received! We'll contact you within 24 hours to confirm.</div>
+      <button class="submit-btn" id="submit-btn" onclick="submitOrder()">Place Order →</button>
+      <div id="success-msg" style="display:none; margin-top:1.5rem; background:#0d1a0d; border:0.5px solid #2e5a2e; border-radius:10px; padding:2rem; text-align:center;">
+        <div style="font-size:40px; margin-bottom:0.8rem;">✅</div>
+        <div style="font-size:20px; font-weight:700; color:#7ec87e; margin-bottom:0.5rem;">Order Placed Successfully!</div>
+        <div style="font-size:13px; color:#5a8a5a; margin-bottom:1.2rem;">Thank you for your order. We will contact you within 24 hours to confirm.</div>
+        <div style="background:#16110a; border:0.5px solid #3a2d15; border-radius:8px; padding:1rem; display:inline-block; min-width:220px;">
+          <div style="font-size:11px; color:#8a6520; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px;">Your Order Number</div>
+          <div id="order-number" style="font-size:24px; font-weight:700; color:#d4a843;"></div>
+        </div>
+        <div style="margin-top:1rem; font-size:12px; color:#5a4a32;">Please save your order number for reference</div>
+      </div>
     </div>
   </div>
 
@@ -439,6 +448,8 @@
 
     renderProducts('all');
 
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxvPfwPQDwL6h8LAP7YJyPFYN9PMRJGgpF3d8xt4lb9MN08tT8f_9rClCUqki5Tg76uVQ/exec';
+
     function submitOrder() {
       const name = document.getElementById('fname').value.trim();
       const phone = document.getElementById('phone').value.trim();
@@ -446,6 +457,7 @@
       const qty = document.getElementById('qty').value.trim();
       const address = document.getElementById('address').value.trim();
       const pincode = document.getElementById('pincode').value.trim();
+
       if (!name) { alert('Please enter your full name.'); return; }
       if (!phone) { alert('Please enter your phone number.'); return; }
       if (!/^[6-9]\d{9}$/.test(phone.replace(/\s+/g, ''))) { alert('Please enter a valid 10-digit Indian mobile number.'); return; }
@@ -453,21 +465,44 @@
       if (!address) { alert('Please enter your delivery address.'); return; }
       if (!pincode || pincode.length !== 6 || isNaN(pincode)) { alert('Please enter a valid 6-digit PIN code.'); return; }
 
-      const message = `🛒 *New Order - ImportedDryFruits*%0A%0A` +
-        `👤 *Name:* ${name}%0A` +
-        `📞 *Phone:* ${phone}%0A` +
-        `📦 *Product:* ${product}%0A` +
-        `⚖️ *Quantity:* ${qty}%0A` +
-        `🏠 *Address:* ${address}%0A` +
-        `📮 *PIN Code:* ${pincode}`;
-
-      const waURL = `https://wa.me/917678418829?text=${message}`;
-      window.open(waURL, '_blank');
-
-      document.getElementById('success-msg').style.display = 'block';
-      const btn = document.querySelector('.submit-btn');
+      const btn = document.getElementById('submit-btn');
       btn.disabled = true;
-      btn.style.opacity = '0.5';
+      btn.textContent = 'Placing Order...';
+      btn.style.opacity = '0.7';
+
+      const orderData = { name, phone, product, qty, address, pincode };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      }).then(() => {
+        // Generate order number client side
+        const orderNo = 'ORD-' + (1000 + Math.floor(Math.random() * 9000));
+        document.getElementById('order-number').textContent = orderNo;
+        document.getElementById('success-msg').style.display = 'block';
+        btn.style.display = 'none';
+
+        // Also send WhatsApp notification to seller
+        const message = encodeURIComponent(
+          '🛒 *New Order - ImportedDryFruits*\n\n' +
+          '🔢 *Order No:* ' + orderNo + '\n' +
+          '👤 *Name:* ' + name + '\n' +
+          '📞 *Phone:* ' + phone + '\n' +
+          '📦 *Product:* ' + product + '\n' +
+          '⚖️ *Quantity:* ' + qty + '\n' +
+          '🏠 *Address:* ' + address + '\n' +
+          '📮 *PIN Code:* ' + pincode
+        );
+        window.open('https://wa.me/917678418829?text=' + message, '_blank');
+
+      }).catch(() => {
+        alert('Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Place Order →';
+        btn.style.opacity = '1';
+      });
     }
   </script>
 </body>
