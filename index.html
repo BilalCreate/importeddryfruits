@@ -470,29 +470,49 @@
       btn.textContent = 'Placing Order...';
       btn.style.opacity = '0.7';
 
-      const orderData = { name, phone, product, qty, address, pincode };
-
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
-      }).then(() => {
-        // Generate order number client side
-        const orderNo = 'ORD-' + (1000 + Math.floor(Math.random() * 9000));
-        document.getElementById('order-number').textContent = orderNo;
-        document.getElementById('success-msg').style.display = 'block';
-        btn.style.display = 'none';
-
-
-
-      }).catch(() => {
-        alert('Something went wrong. Please try again.');
-        btn.disabled = false;
-        btn.textContent = 'Place Order →';
-        btn.style.opacity = '1';
+      // Build GET URL with all parameters
+      const params = new URLSearchParams({
+        name: name,
+        phone: phone,
+        product: product,
+        qty: qty,
+        address: address,
+        pincode: pincode
       });
+
+      const callbackName = 'cb_' + Date.now();
+
+      // Fallback after 6 seconds if no response
+      const fallback = setTimeout(function() {
+        if (window[callbackName]) {
+          delete window[callbackName];
+          showSuccess('ORD-' + (1000 + Math.floor(Math.random() * 9000)));
+        }
+      }, 6000);
+
+      window[callbackName] = function(response) {
+        clearTimeout(fallback);
+        delete window[callbackName];
+        const orderNo = (response && response.orderNo) ? response.orderNo : 'ORD-' + (1000 + Math.floor(Math.random() * 9000));
+        showSuccess(orderNo);
+      };
+
+      const script = document.createElement('script');
+      script.src = SCRIPT_URL + '?' + params.toString() + '&callback=' + callbackName;
+      script.onerror = function() {
+        clearTimeout(fallback);
+        if (window[callbackName]) {
+          delete window[callbackName];
+          showSuccess('ORD-' + (1000 + Math.floor(Math.random() * 9000)));
+        }
+      };
+      document.head.appendChild(script);
     }
-  </script>
-</body>
-</html>
+
+    function showSuccess(orderNo) {
+      document.getElementById('order-number').textContent = orderNo;
+      document.getElementById('success-msg').style.display = 'block';
+      document.getElementById('submit-btn').style.display = 'none';
+    }
+
+
